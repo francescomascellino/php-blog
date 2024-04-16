@@ -22,13 +22,20 @@ require __DIR__ . "/functions.php";
 
 <body>
     <h1>PHP My Blog</h1>
-    <p><?php echo $connection_message; ?></p>
 
-    <p>
-        <?php if (isset($_SESSION)) {
-            echo $_SESSION['message'];
-        } ?>
-    </p>
+    <p>Connection Message: <?php echo $connection_message; ?></p>
+
+    <?php if (isset($_SESSION)) : ?>
+
+        <?php if (isset($_SESSION['message'])) : ?>
+            <p><?php echo "Session message: " . $_SESSION['message']; ?></p>
+        <?php endif; ?>
+
+        <?php if (isset($_SESSION['error'])) : ?>
+            <p><?php echo "Session error: " . $_SESSION['error']; ?></p>
+        <?php endif; ?>
+
+    <?php endif; ?>
 
     <p>
         <?php
@@ -38,53 +45,58 @@ require __DIR__ . "/functions.php";
         ?>
     </p>
 
-
     <div class="container">
-        <div class="row">
 
-            <div class="col">
+        <?php if (!isset($_SESSION['user_id'])) : ?>
 
-                <!-- LOGIN FORM -->
-                <form method="POST" action="login.php">
-                    <div class="mb-3">
-                        <label for="username" class="form-label">Username</label>
-                        <input type="text" class="form-control" id="username" name="username" placeholder="Enter your Username">
-                    </div>
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password">
-                    </div>
-                    <button type="submit" name="login_btn" class="btn btn-primary">Login</button>
+            <div class="row">
 
-                    <button type="reset" class="btn btn-danger">Reset</button>
-
-                </form>
-
-            </div>
-
-            <div class="row mt-3">
                 <div class="col">
 
-                    <!-- ALL POSTS -->
-                    <?php foreach ($posts as $key => $post) : ?>
-
-                        <div class="card my-3">
-                            <div class="card-body">
-                                <h5 class="card-title">TITLE: <?php echo $post['title'] ?></h5>
-                                <h6>POST ID <?php echo $post['id'] ?></h6>
-                                <h6 class="card-subtitle mb-2 text-muted ">AUTHOR: <?php echo $post['author'] ?></h6>
-                                <p class="card-text"><?php echo $post['content'] ?></p>
-                            </div>
+                    <!-- LOGIN FORM -->
+                    <form method="POST" action="login.php">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="username" name="username" placeholder="Enter your Username">
                         </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password">
+                        </div>
+                        <button type="submit" name="login_btn" class="btn btn-primary">Login</button>
 
-                    <?php endforeach ?>
+                        <button type="reset" class="btn btn-danger">Reset</button>
+
+                    </form>
 
                 </div>
+
             </div>
 
+        <?php endif; ?>
 
+        <div class="row mt-3">
+            <div class="col">
 
+                <!-- ALL POSTS -->
+                <?php foreach ($posts as $key => $post) : ?>
+
+                    <div class="card my-3">
+                        <div class="card-body">
+                            <h5 class="card-title">TITLE: <?php echo $post['title'] ?></h5>
+                            <h6>POST ID <?php echo $post['id'] ?></h6>
+                            <h6 class="card-subtitle mb-2 text-muted ">AUTHOR: <?php echo $post['author'] ?></h6>
+                            <p class="card-text"><?php echo $post['content'] ?></p>
+                        </div>
+
+                        <a class="btn btn-warning w-25" href="<?php echo 'edit.php?post_id=' . $post['id']; ?>">Modifica Post</a>
+                    </div>
+
+                <?php endforeach ?>
+
+            </div>
         </div>
+
     </div>
 
 

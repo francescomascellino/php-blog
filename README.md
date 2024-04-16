@@ -86,6 +86,7 @@ if ($result->num_rows === 1) {
 ```
 
 # GET ALL POSTS FROM DATABASE
+*functions.php*
 ```php
 <?php
 function getAllPosts()
@@ -119,6 +120,7 @@ function getAuthorById($user_id)
 /** @var array $posts */
 $posts = getAllPosts();
 ```
+*index.php*
 ```php
 <?php foreach ($posts as $key => $post) : ?>
 
@@ -132,4 +134,62 @@ $posts = getAllPosts();
     </div>
 
 <?php endforeach ?>
+```
+
+# BASIC CONTROL ON USER TO EDIT POST
+link to the post edit page on *index.php*
+```php
+<?php foreach ($posts as $key => $post) : ?>
+
+    <a class="btn btn-warning w-25" href="<?php echo 'edit.php?post_id=' . $post['id']; ?>">Modifica Post</a>
+
+<?php endforeach ?>
+```
+*edit.php*
+```php
+<?php
+
+session_start();
+
+if (isset($_GET['post_id'])) {
+    $post_id = $_GET['post_id'];
+}
+
+if ($_SESSION['user_id'] == $post_id) {
+    $_SESSION['message'] = "L'utente " . $_SESSION['user_name'] . " (ID " . $_SESSION['user_id'] . ") è autorizzato a modificare il post con ID " . $post_id;
+} else {
+    $_SESSION['error'] = "Messaggio per gli utenti con ID diverso da quello autenticato.";
+}
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Page</title>
+</head>
+
+<body>
+    questa è la bozza della pagina di modifica.
+
+    <?php if (isset($_SESSION)) : ?>
+
+        <?php if (isset($_SESSION['message'])) : ?>
+            <p><?php echo "Session message: " . $_SESSION['message']; ?></p>
+        <?php endif; ?>
+
+        <?php if (isset($_SESSION['error'])) : ?>
+            <p><?php echo "Session error: " . $_SESSION['error']; ?></p>
+        <?php endif; ?>
+
+    <?php endif; ?>
+
+    <a href="index.php">Torna alla home</a>
+
+</body>
+
+</html>
 ```

@@ -14,4 +14,3 @@ if ($conn->connect_error) {
 } else {
     $connection_message = "Connessione al database avvenuta con successo.";
 }
-?>

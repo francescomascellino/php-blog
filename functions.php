@@ -10,7 +10,7 @@ function getAllPosts()
 
     foreach ($posts as $post) {
         $post['author'] = getAuthorById(($post['user_id']));
-        // var_dump($post['author']);
+
         array_push($final_posts, $post);
     };
 

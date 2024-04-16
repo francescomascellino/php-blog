@@ -28,6 +28,7 @@ if ($result->num_rows === 1) {
     // CHECKS IF THE $stored_password IS EQUAL TO THE HASHED VERSION OF THE $password GIVEN BY THE USER
     if (password_verify($password, $stored_password)) {
         $_SESSION['message'] = "Utente trovato nel database e password corretta. / Accesso Effettuato correttamente!";
+        $_SESSION['error'] = null;
 
         // SETS THE SESSION VARIABLES
         $_SESSION['user_name'] = $row['username'];
@@ -43,7 +44,8 @@ if ($result->num_rows === 1) {
         $_SESSION['user_name'] = "WRONG PASSWORD";
         $_SESSION['user_id'] = "NONE";
 
-        $_SESSION['message'] =  "Utente trovato nel database ma password non corretta. / Nome Utente o Password errati.";
+        $_SESSION['message'] = null;
+        $_SESSION['error'] =  "Utente trovato nel database ma password non corretta. / Nome Utente o Password errati.";
 
         var_dump($_SESSION['message']);
         var_dump($_SESSION['user_name']);
@@ -55,7 +57,8 @@ if ($result->num_rows === 1) {
     $_SESSION['user_name'] = "USER NOT FOUND";
     $_SESSION['user_id'] = "NONE";
 
-    $_SESSION['message'] =  "Utente non trovato nel database. / Nome Utente o Password errati.";
+    $_SESSION['error'] =  "Utente non trovato nel database. / Nome Utente o Password errati.";
+    $_SESSION['message'] = null;
 
     header("Location: index.php");
 }
