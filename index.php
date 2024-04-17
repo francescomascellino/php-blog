@@ -47,12 +47,12 @@ $posts = getAllPosts();
 
         <?php if (!isset($_SESSION['user_id'])) : ?>
 
-            <div class="row">
+            <div class="row mt-3">
 
                 <div class="col">
 
                     <!-- LOGIN FORM -->
-                    <form method="POST" action="login.php">
+                    <form method="POST" action="login.php" class="border rounded p-3">
                         <div class="mb-3">
                             <label for="username" class="form-label">Username</label>
                             <input type="text" class="form-control" id="username" name="username" placeholder="Enter your Username">
@@ -77,31 +77,31 @@ $posts = getAllPosts();
             </form>
         <?php endif; ?>
 
-        <div class="row mt-3">
+        <div class="row">
             <div class="col">
 
                 <!-- ALL POSTS -->
                 <?php foreach ($posts as $key => $post) : ?>
 
-                    <div class="card my-3">
-                        <div class="card-body">
-                            <h5 class="card-title">TITLE: <?php echo $post['title'] ?></h5>
-                            <h6>POST ID <?php echo $post['id'] ?></h6>
-                            <h6 class="card-subtitle mb-2 text-muted ">AUTHOR: <?php echo $post['author'] ?></h6>
-                            <p class="card-text"><?php echo $post['content'] ?></p>
+                    <div class="col">
+                        <div class="card my-3">
+                            <div class="card-body">
+                                <h5 class="card-title">TITLE: <?php echo $post['title'] ?></h5>
+                                <h6>POST ID <?php echo $post['id'] ?></h6>
+                                <h6 class="card-subtitle mb-2 text-muted ">AUTHOR: <?php echo $post['author'] ?></h6>
+                                <p class="card-text"><?php echo $post['content'] ?></p>
+                            </div>
+
+                            <?php echo "Post user_id = " . $post['user_id'] ?>
+
+                            <?php if (isset($_SESSION['user_id']) && ($_SESSION['user_id'] == 1 || $_SESSION['user_id'] == $post['user_id'])) : ?>
+                                <a class="btn btn-warning w-25" href="<?php echo 'edit.php?post_id=' . $post['id']; ?>">Modifica Post</a>
+
+                            <?php else : ?>
+                                <a class="btn btn-warning disabled w-25" href="#">Modifica Post</a>
+                            <?php endif; ?>
+
                         </div>
-
-                        <?php echo "Post user_id = " . $post['user_id'] ?>
-
-                        <?php if (isset($_SESSION['user_id']) && ($_SESSION['user_id'] == 1 || $_SESSION['user_id'] == $post['user_id'])) : ?>
-                            <a class="btn btn-warning w-25" href="<?php echo 'edit.php?post_id=' . $post['id']; ?>">Modifica Post</a>
-
-                        <?php else : ?>
-                            <a class="btn btn-warning disabled w-25" href="#">Modifica Post</a>
-                        <?php endif; ?>
-
-
-
                     </div>
 
                 <?php endforeach ?>
