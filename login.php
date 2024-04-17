@@ -38,8 +38,8 @@ if ($result->num_rows === 1) {
         header("Location: index.php");
     } else {
 
-        $_SESSION['user_name'] = "WRONG PASSWORD";
-        $_SESSION['user_id'] = "NONE";
+        $_SESSION['user_name'] = $row['username'] . " BUT WRONG PASSWORD";
+        $_SESSION['user_id'] = $row['id'];
 
         $_SESSION['message'] = null;
         $_SESSION['error'] =  "Utente trovato nel database ma password non corretta. / Nome Utente o Password errati.";

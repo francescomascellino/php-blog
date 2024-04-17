@@ -1,5 +1,13 @@
 <?php
-session_start();
+
+if (session_status() === PHP_SESSION_ACTIVE) {
+    echo "SESSION EXISTS!" . "<br>";
+    var_dump($_SESSION);
+} else {
+    echo "SESSION DOES NOT EXISTS! STARTING SESSION..." . "<br>";
+    session_start();
+    var_dump($_SESSION);
+}
 
 /* 
 echo "<pre>";
@@ -15,7 +23,13 @@ echo "Cookie Secure: " . ($cookieParams["secure"] ? 'Yes' : 'No') . "<br>";
 echo "Cookie HttpOnly: " . ($cookieParams["httponly"] ? 'Yes' : 'No') . "<br>";
  */
 
-$_SESSION = array();
+// echo "setting session to empty array" . "<br>";
+
+// session_unset();
+
+// var_dump($_SESSION) . "<br>";
+
+echo "<br>";
 
 if (ini_get("session.use_cookies")) {
     $params = session_get_cookie_params();
@@ -35,6 +49,9 @@ session_destroy();
 session_start();
 
 $_SESSION['message'] = "Logout effettuato con successo";
+$_SESSION['error'] = null;
+
+// var_dump($_SESSION['message']);
 
 header("Location: index.php");
 exit();

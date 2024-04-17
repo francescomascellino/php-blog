@@ -8,28 +8,40 @@ $posts = getAllPosts();
 
 <body>
     <h1>PHP My Blog</h1>
+    DATABASE CONNECTION MESSAGE <br>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <span>Connection Message: <?php echo $connection_message; ?></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
 
-    <p>Connection Message: <?php echo $connection_message; ?></p>
-
-    <?php if (isset($_SESSION)) : ?>
-
-        <?php if (isset($_SESSION['message'])) : ?>
-            <p><?php echo "Session message: " . $_SESSION['message']; ?></p>
-        <?php endif; ?>
-
-        <?php if (isset($_SESSION['error'])) : ?>
-            <p><?php echo "Session error: " . $_SESSION['error']; ?></p>
-        <?php endif; ?>
-
+    SESSION MESSAGE <br>
+    <?php if (isset($_SESSION['message'])) : ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <?php echo "Session message: " . $_SESSION['message']; ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
     <?php endif; ?>
 
-    <p>
-        <?php
-        if (isset($_SESSION['user_name'])) {
-            echo 'Username: ' . $_SESSION['user_name'] . ' (ID: ' . $_SESSION['user_id'] . ')';
-        }
-        ?>
-    </p>
+    SESSION ERROR <br>
+    <?php if (isset($_SESSION['error'])) : ?>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <?php echo "Session error: " . $_SESSION['error']; ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <?php endif; ?>
+
+    SESSION USER DETAILS <br>
+    <?php if (isset($_SESSION['user_name'])) : ?>
+        <div class="alert alert-primary alert-dismissible fade show" role="alert">
+            <span>
+                <?php
+                if (isset($_SESSION['user_name'])) {
+                    echo 'Username: ' . $_SESSION['user_name'] . ' (ID: ' . $_SESSION['user_id'] . ')';
+                }
+                ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <?php endif; ?>
 
     <div class="container">
 
@@ -61,7 +73,7 @@ $posts = getAllPosts();
 
         <?php else : ?>
             <form method="POST" action="logout.php">
-            <button type="submit" name="logout_btn" class="btn btn-warning">Logout</button>
+                <button type="submit" name="logout_btn" class="btn btn-warning">Logout</button>
             </form>
         <?php endif; ?>
 
@@ -79,7 +91,17 @@ $posts = getAllPosts();
                             <p class="card-text"><?php echo $post['content'] ?></p>
                         </div>
 
-                        <a class="btn btn-warning w-25" href="<?php echo 'edit.php?post_id=' . $post['id']; ?>">Modifica Post</a>
+                        <?php echo "Post user_id = " . $post['user_id'] ?>
+
+                        <?php if (isset($_SESSION['user_id']) && ($_SESSION['user_id'] == 1 || $_SESSION['user_id'] == $post['user_id'])) : ?>
+                            <a class="btn btn-warning w-25" href="<?php echo 'edit.php?post_id=' . $post['id']; ?>">Modifica Post</a>
+
+                        <?php else : ?>
+                            <a class="btn btn-warning disabled w-25" href="#">Modifica Post</a>
+                        <?php endif; ?>
+
+
+
                     </div>
 
                 <?php endforeach ?>
@@ -88,8 +110,6 @@ $posts = getAllPosts();
         </div>
 
     </div>
-
-
 
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>

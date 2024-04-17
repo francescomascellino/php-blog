@@ -1,6 +1,12 @@
 <?php
-
-session_start();
+if (session_status() === PHP_SESSION_ACTIVE) {
+    echo "SESSION EXISTS!" . "<br>";
+    var_dump($_SESSION);
+} else {
+    echo "SESSION DOES NOT EXISTS! STARTING SESSION..." . "<br>";
+    session_start();
+    var_dump($_SESSION);
+}
 
 define("DB_SERVERNAME", "localhost");
 define("DB_USERNAME", "root");
