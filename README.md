@@ -145,32 +145,39 @@ link to the post edit page on *index.php*
 
 <?php endforeach ?>
 ```
+
+*functions.php*
+```php
+function getSinglePostById($post_id)
+{
+    global $conn;
+    $result = mysqli_query($conn, "SELECT * FROM posts WHERE id=$post_id AND user_id={$_SESSION['user_id']}");
+
+    return mysqli_fetch_assoc($result);
+
+};
+```
 *edit.php*
 ```php
 <?php
+include __DIR__ . "/Partials/head.php";
+?>
 
-session_start();
+<?php
 
 if (isset($_GET['post_id'])) {
     $post_id = $_GET['post_id'];
 }
 
-if ($_SESSION['user_id'] == $post_id) {
+$post = getSinglePostById($post_id);
+
+if ($_SESSION['user_id'] == $post['user_id']) {
     $_SESSION['message'] = "L'utente " . $_SESSION['user_name'] . " (ID " . $_SESSION['user_id'] . ") è autorizzato a modificare il post con ID " . $post_id;
 } else {
     $_SESSION['error'] = "Messaggio per gli utenti con ID diverso da quello autenticato.";
 }
 
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Page</title>
-</head>
 
 <body>
     questa è la bozza della pagina di modifica.
@@ -179,6 +186,10 @@ if ($_SESSION['user_id'] == $post_id) {
 
         <?php if (isset($_SESSION['message'])) : ?>
             <p><?php echo "Session message: " . $_SESSION['message']; ?></p>
+        <?php endif; ?>
+
+        <?php if (isset($post)) : ?>
+            <p><?php echo "Post Title: " . $post['title']; ?></p>
         <?php endif; ?>
 
         <?php if (isset($_SESSION['error'])) : ?>

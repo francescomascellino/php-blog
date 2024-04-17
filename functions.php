@@ -25,5 +25,10 @@ function getAuthorById($user_id)
     return mysqli_fetch_assoc($result)['username'];
 };
 
-/** @var array $posts */
-$posts = getAllPosts();
+function getSinglePostById($post_id)
+{
+    global $conn;
+    $result = mysqli_query($conn, "SELECT * FROM posts WHERE id=$post_id AND user_id={$_SESSION['user_id']}");
+
+    return mysqli_fetch_assoc($result);
+};
