@@ -59,6 +59,10 @@ $posts = getAllPosts();
 
             </div>
 
+        <?php else : ?>
+            <form method="POST" action="logout.php">
+            <button type="submit" name="logout_btn" class="btn btn-warning">Logout</button>
+            </form>
         <?php endif; ?>
 
         <div class="row mt-3">
