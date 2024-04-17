@@ -34,9 +34,6 @@ if ($result->num_rows === 1) {
         $_SESSION['user_name'] = $row['username'];
         $_SESSION['user_id'] = $row['id'];
 
-        var_dump($_SESSION['message']);
-        var_dump($_SESSION['user_name']);
-
         // REDIRECTS TO THE HOME PAGE
         header("Location: index.php");
     } else {
@@ -46,9 +43,6 @@ if ($result->num_rows === 1) {
 
         $_SESSION['message'] = null;
         $_SESSION['error'] =  "Utente trovato nel database ma password non corretta. / Nome Utente o Password errati.";
-
-        var_dump($_SESSION['message']);
-        var_dump($_SESSION['user_name']);
 
         header("Location: index.php");
     }
