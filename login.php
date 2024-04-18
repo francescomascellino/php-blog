@@ -1,6 +1,6 @@
 <?php
-require "server.php";
 
+require "server.php";
 
 $password = $_POST['password'];
 $username = $_POST['username'];

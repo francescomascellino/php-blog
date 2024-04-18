@@ -1,55 +1,52 @@
 <?php
-include __DIR__ . "/Partials/head.php";
-?>
+require __DIR__ . "/Partials/head.php";
 
-<?php
+require __DIR__ . "/Controllers/PostController.php";
 $posts = getAllPosts();
-?>
 
-<?php
 if (isset($_GET['logout'])) {
     $_SESSION['message'] = 'Logout effettuato con successo.';
 }
 ?>
 
 <body>
-    <h1>PHP My Blog</h1>
-    DATABASE CONNECTION MESSAGE <br>
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <span>Connection Message: <?php echo $connection_message; ?></span>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-
-    SESSION MESSAGE <br>
-    <?php if (isset($_SESSION['message'])) : ?>
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <?php echo "Session message: " . $_SESSION['message']; ?>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    <?php endif; ?>
-
-    SESSION ERROR <br>
-    <?php if (isset($_SESSION['error'])) : ?>
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <?php echo "Session error: " . $_SESSION['error']; ?>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    <?php endif; ?>
-
-    SESSION USER DETAILS <br>
-    <?php if (isset($_SESSION['user_name'])) : ?>
-        <div class="alert alert-primary alert-dismissible fade show" role="alert">
-            <span>
-                <?php
-                if (isset($_SESSION['user_name'])) {
-                    echo 'Username: ' . $_SESSION['user_name'] . ' (ID: ' . $_SESSION['user_id'] . ')';
-                }
-                ?>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    <?php endif; ?>
-
     <div class="container">
+
+        <h1 class="text-center">PHP My Blog</h1>
+        DATABASE CONNECTION MESSAGE <br>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <span>Connection Message: <?php echo $connection_message; ?></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
+        SESSION MESSAGE <br>
+        <?php if (isset($_SESSION['message'])) : ?>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <?php echo "Session message: " . $_SESSION['message']; ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <?php endif; ?>
+
+        SESSION ERROR <br>
+        <?php if (isset($_SESSION['error'])) : ?>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <?php echo "Session error: " . $_SESSION['error']; ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <?php endif; ?>
+
+        SESSION USER DETAILS <br>
+        <?php if (isset($_SESSION['user_name'])) : ?>
+            <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                <span>
+                    <?php
+                    if (isset($_SESSION['user_name'])) {
+                        echo 'Username: ' . $_SESSION['user_name'] . ' (ID: ' . $_SESSION['user_id'] . ')';
+                    }
+                    ?>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <?php endif; ?>
 
         <?php if (!isset($_SESSION['user_id'])) : ?>
 
