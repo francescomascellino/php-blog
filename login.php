@@ -38,23 +38,23 @@ if ($result->num_rows === 1) {
         header("Location: index.php");
     } else {
 
-        $_SESSION['user_name'] = $row['username'] . " BUT WRONG PASSWORD";
-        $_SESSION['user_id'] = $row['id'];
+        $_SESSION['user_name'] = null;
+        $_SESSION['user_id'] = null;
 
         $_SESSION['message'] = null;
         $_SESSION['error'] =  "Utente trovato nel database ma password non corretta. / Nome Utente o Password errati.";
 
-        header("Location: index.php");
+        header("Location: authentication.php");
     }
 } else {
     // IF THERE IS NO ROW IN THE $result WE DO NOT HAVE A MATCHING USER REGISTERED IN THE DB
-    $_SESSION['user_name'] = "USER NOT FOUND";
-    $_SESSION['user_id'] = "NONE";
+    $_SESSION['user_name'] = null;
+    $_SESSION['user_id'] = null;
 
     $_SESSION['error'] =  "Utente non trovato nel database. / Nome Utente o Password errati.";
     $_SESSION['message'] = null;
 
-    header("Location: index.php");
+    header("Location: authentication.php");
 }
 
 exit();

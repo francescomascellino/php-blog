@@ -51,6 +51,6 @@ session_start();
 $_SESSION['message'] = "Logout effettuato con successo.";
 $_SESSION['error'] = null;
 
-header("Location: index.php");
-// header("Location: index.php?logout");
+// header("Location: index.php");
+header("Location: index.php?logout");
 exit();

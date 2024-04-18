@@ -204,3 +204,77 @@ if ($_SESSION['user_id'] == $post['user_id']) {
 
 </html>
 ```
+
+# BASIC EXAMPLE OF POST UPDATE
+*edit.php*
+```php
+<form method="POST" action="Controllers/PostController.php?action=updatePost" class=" border rounded p-3">
+
+    <input type="hidden" name="post_id" value="<?php echo $post_id; ?>">
+
+        <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" class="form-control" id="title" name="title" placeholder="Enter your post title" value="<?php echo $post['title']; ?>">
+        </div>
+
+    <button type="submit" name="update_btn" class="btn btn-primary">Update Post</button>
+
+</form>
+```
+
+*PostController.php*
+```php
+// UPDATE - WE INTERCEPT THE POST REQUEST AND CHECK IF THE ACTION IS updatePost
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['action'] === 'updatePost') {
+
+    $post_id = $_POST['post_id'];
+    $post = getSinglePostById($post_id);
+
+    // THEN WE RUN THE UPDATE METHOD
+    updatePost($post);
+}
+
+function updatePost($post)
+{
+    global $conn;
+
+    $original_title = $post['title'];
+
+    $new_title = $_POST['title'];
+
+    if ($new_title !== $original_title) {
+
+        $stmt = mysqli_prepare($conn, "UPDATE posts SET title = ? WHERE id = ?");
+
+        if ($stmt) {
+            mysqli_stmt_bind_param($stmt, "si", $new_title, $post['id']);
+
+            if (mysqli_stmt_execute($stmt)) {
+                $_SESSION['error'] = NULL;
+                $_SESSION['message'] = "Il post è stato aggiornato con successo!";
+
+                header("Location: /index.php");
+                exit;
+            } else {
+                $_SESSION['message'] = NULL;
+                $_SESSION['error'] = "Si è verificato un errore durante l'aggiornamento del post.";
+
+                header("Location: /index.php");
+                exit;
+            }
+
+            mysqli_stmt_close($stmt);
+        } else {
+            $_SESSION['message'] = NULL;
+            $_SESSION['error'] = "Si è verificato un errore durante la preparazione della query.";
+            header("Location: /index.php");
+            exit;
+        }
+    } else {
+        $_SESSION['message'] = NULL;
+        $_SESSION['error'] = "Il titolo del post è lo stesso. Nessuna modifica effettuata.";
+        header("Location: /index.php");
+        exit;
+    }
+}
+```

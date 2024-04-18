@@ -42,12 +42,13 @@ function createPost()
 {
 }
 
-// UPDATE
+// UPDATE - WE INTERCEPT THE POST REQUEST AND CHECK IF THE ACTION IS updatePost
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['action'] === 'updatePost') {
 
     $post_id = $_POST['post_id'];
-    echo "post_id: " . $post_id;
     $post = getSinglePostById($post_id);
+
+    // THEN WE RUN THE UPDATE METHOD
     updatePost($post);
 }
 

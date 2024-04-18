@@ -6,15 +6,24 @@ include "Controllers/PostController.php";
 
 <?php
 
+// IF USER IS NOT LOGGED IN, CAN NOT MODIFY POST
+if (!isset($_SESSION['user_id'])) {
+
+    $_SESSION['error'] = "L'utente deve essere loggato per modificare un post.";
+
+    header("Location: index.php");
+}
+
+// GETS THE POST DATA
 if (isset($_GET['post_id'])) {
     $post_id = $_GET['post_id'];
 }
 
 $post = getSinglePostById($post_id);
 
-if ($_SESSION['user_id'] == $post['user_id']) {
-    $_SESSION['message'] = "L'utente " . $_SESSION['user_name'] . " (ID " . $_SESSION['user_id'] . ") è autorizzato a modificare il post con ID " . $post_id;
-} else {
+// IF THE $_SESSION user_id DOES NOT MATCH THE POST user_id, USER CAN NOT EDIT THE POST
+if ($_SESSION['user_id'] != $post['user_id']) {
+
     $_SESSION['error'] = "L'utente non è autorizzato a modificare il post.";
 
     header("Location: index.php");
@@ -23,27 +32,27 @@ if ($_SESSION['user_id'] == $post['user_id']) {
 ?>
 
 <body>
-    Questa è la bozza della pagina di modifica.
 
-    <br> SESSION MESSAGE <br>
-    <?php if (isset($_SESSION['message'])) : ?>
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <?php echo "Session message: " . $_SESSION['message']; ?>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    <?php endif; ?>
-
-    <?php if (isset($post)) : ?>
-        <h1><?php echo "Post Title: " . $post['title']; ?></h1>
-    <?php endif; ?>
-
-    <?php if (isset($_SESSION['error'])) : ?>
-        <p><?php echo "Session error: " . $_SESSION['error']; ?></p>
-    <?php endif; ?>
+    <?php
+    require __DIR__ . "/Partials/navbar.php"
+    ?>
 
     <div class="container">
+
+        <?php
+        require __DIR__ . "/Partials/alerts.php"
+        ?>
+
         <div class="row">
             <div class="col">
+
+                Questa è la bozza della pagina di modifica.
+
+                <?php if (isset($post)) : ?>
+                    <h1><?php echo "Editing Post: " . $post['title']; ?></h1>
+                <?php endif; ?>
+
+                <!-- EDIT POST FORM -->
                 <form method="POST" action="Controllers/PostController.php?action=updatePost" class=" border rounded p-3">
 
                     <input type="hidden" name="post_id" value="<?php echo $post_id; ?>">
@@ -60,8 +69,10 @@ if ($_SESSION['user_id'] == $post['user_id']) {
         </div>
     </div>
 
-    <a href="index.php">Torna alla home</a>
-
 </body>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+<script src="script.js" type="text/javascript"></script>
 
 </html>
