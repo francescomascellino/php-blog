@@ -6,6 +6,12 @@ include __DIR__ . "/Partials/head.php";
 $posts = getAllPosts();
 ?>
 
+<?php
+if (isset($_GET['logout'])) {
+    $_SESSION['message'] = 'Logout effettuato con successo.';
+}
+?>
+
 <body>
     <h1>PHP My Blog</h1>
     DATABASE CONNECTION MESSAGE <br>

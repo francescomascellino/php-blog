@@ -6,8 +6,10 @@ if (session_status() === PHP_SESSION_ACTIVE) {
     var_dump($_SESSION);
     echo "</pre>";
 } else {
-    echo "SESSION DOES NOT EXISTS! STARTING SESSION..." . "<br>";
     session_start();
+
+    echo "SESSION DOES NOT EXISTS! STARTING SESSION..." . "<br>";
+
     echo "<pre>";
     var_dump($_SESSION);
     echo "</pre>";
@@ -26,12 +28,6 @@ echo "Cookie Domain: " . $cookieParams["domain"] . "<br>";
 echo "Cookie Secure: " . ($cookieParams["secure"] ? 'Yes' : 'No') . "<br>";
 echo "Cookie HttpOnly: " . ($cookieParams["httponly"] ? 'Yes' : 'No') . "<br>";
  */
-
-// echo "setting session to empty array" . "<br>";
-
-// session_unset();
-
-// var_dump($_SESSION) . "<br>";
 
 echo "<br>";
 
@@ -52,10 +48,9 @@ session_destroy();
 
 session_start();
 
-$_SESSION['message'] = "Logout effettuato con successo";
+$_SESSION['message'] = "Logout effettuato con successo.";
 $_SESSION['error'] = null;
 
-// var_dump($_SESSION['message']);
-
 header("Location: index.php");
+// header("Location: index.php?logout");
 exit();
