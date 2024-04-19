@@ -33,6 +33,9 @@ if ($_SESSION['user_id'] != $post['user_id']) {
     header("Location: index.php");
 }
 
+$values = $_GET['values'] ?? array();
+$errors = $_GET['errors'] ?? array();
+
 ?>
 
 <body>
@@ -45,6 +48,11 @@ if ($_SESSION['user_id'] != $post['user_id']) {
 
         <?php
         require __DIR__ . "/Partials/alerts.php"
+        ?>
+
+        <!-- VALIDATION ALERTS -->
+        <?php
+        require __DIR__ . "/Partials/validation_alerts.php"
         ?>
 
         <div class="row">
@@ -63,7 +71,7 @@ if ($_SESSION['user_id'] != $post['user_id']) {
 
                     <div class="mb-3">
                         <label for="title" class="form-label">Title</label>
-                        <input type="text" class="form-control" id="title" name="title" placeholder="Enter your post title" value="<?php echo $post['title']; ?>">
+                        <input type="text" class="form-control" id="title" name="title" placeholder="Enter your post title" value="<?php echo $values['title'] ??  $post['title']; ?>">
                     </div>
 
                     <button type="submit" name="update_btn" class="btn btn-primary">Update Post</button>
@@ -77,6 +85,6 @@ if ($_SESSION['user_id'] != $post['user_id']) {
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
-<script src="script.js" type="text/javascript"></script>
+<script src="/Static/script.js" type="text/javascript"></script>
 
 </html>

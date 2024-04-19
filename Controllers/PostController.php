@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__ . "/../server.php";
+require __DIR__ . "/../Static/server.php";
 
 require __DIR__ . "/../Classes/BlogPost.php";
 
@@ -43,6 +43,34 @@ function getSinglePostById($post_id)
 // CREATE - WE INTERCEPT THE POST REQUEST AND CHECK IF THE ACTION IS createPost
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['action'] === 'createPost') {
 
+    // VALIDATION
+    $errors = array();
+
+    if (empty(trim($_POST['title']))) {
+        array_push($errors, "Il titolo non può essere vuoto");
+    }
+
+    if (empty(trim($_POST['content']))) {
+        array_push($errors, "Il contenuto non può essere vuoto");
+    }
+
+    if (empty($_POST['category_id'])) {
+        array_push($errors, "Seleziona almeno una categoria");
+    }
+
+    if (!empty($errors)) {
+        $values = array(
+            'title' => $_POST['title'],
+            'content' => $_POST['content'],
+            'category_id' => $_POST['category_id']
+        );
+        $query_params = http_build_query(array('values' => $values, 'errors' => $errors));
+
+        // Reindirizza alla pagina precedente con i parametri di query nell'URL
+        header("Location: /create.php?$query_params");
+        exit;
+    }
+
     $title = $_POST['title'];
     $content = $_POST['content'];
     $image = $_POST['image'];
@@ -72,6 +100,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['ac
 
     $post_id = $_POST['post_id'];
     $post = getSinglePostById($post_id);
+
+    // VALIDATION
+    $errors = array();
+
+    if (empty(trim($_POST['title']))) {
+        array_push($errors, "Il titolo non può essere vuoto");
+    }
+
+    if (!empty($errors)) {
+        $values = array(
+            'title' => $_POST['title'],
+        );
+        $query_params = http_build_query(array('values' => $values, 'errors' => $errors));
+
+        // Reindirizza alla pagina precedente con i parametri di query nell'URL
+        header("Location: /edit.php?post_id=$post_id&$query_params");
+        exit;
+    }
 
     // THEN WE RUN THE UPDATE METHOD
     updatePost($post);

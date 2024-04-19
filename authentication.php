@@ -38,7 +38,7 @@ $posts = getAllPosts();
                 <div class="col">
 
                     <!-- LOGIN FORM -->
-                    <form method="POST" action="login.php" class="border rounded p-3">
+                    <form method="POST" action="/Auth/login.php" class="border rounded p-3">
                         <div class="mb-3">
                             <label for="username" class="form-label">Username</label>
                             <input type="text" class="form-control" id="username" name="username" placeholder="Enter your Username">
@@ -78,6 +78,6 @@ $posts = getAllPosts();
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
-<script src="script.js" type="text/javascript"></script>
+<script src="/Static/script.js" type="text/javascript"></script>
 
 </html>

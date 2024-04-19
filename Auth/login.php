@@ -1,6 +1,6 @@
 <?php
 
-require "server.php";
+require "../Static/server.php";
 
 $password = $_POST['password'];
 $username = $_POST['username'];
@@ -35,7 +35,7 @@ if ($result->num_rows === 1) {
         $_SESSION['user_id'] = $row['id'];
 
         // REDIRECTS TO THE HOME PAGE
-        header("Location: index.php");
+        header("Location: /index.php");
     } else {
 
         $_SESSION['user_name'] = null;
@@ -44,7 +44,7 @@ if ($result->num_rows === 1) {
         $_SESSION['message'] = null;
         $_SESSION['error'] =  "Utente trovato nel database ma password non corretta. / Nome Utente o Password errati.";
 
-        header("Location: authentication.php");
+        header("Location: /authentication.php");
     }
 } else {
     // IF THERE IS NO ROW IN THE $result WE DO NOT HAVE A MATCHING USER REGISTERED IN THE DB
@@ -54,7 +54,7 @@ if ($result->num_rows === 1) {
     $_SESSION['error'] =  "Utente non trovato nel database. / Nome Utente o Password errati.";
     $_SESSION['message'] = null;
 
-    header("Location: authentication.php");
+    header("Location: /authentication.php");
 }
 
 exit();

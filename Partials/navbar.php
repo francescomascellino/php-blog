@@ -26,13 +26,15 @@
 
                 <?php else : ?>
 
-                    <form method="POST" action="logout.php">
-                        <a href="logout.php" class="nav-link active" role="button">Logout</a>
+                    <form method="POST" action="../Auth/logout.php">
+                        <a href="../Auth/logout.php" class="nav-link active" role="button">Logout</a>
                     </form>
+
+                    <a class='nav-link active' href='/create.php'>Create Post</a>
 
                 <?php endif; ?>
 
-                <a class='nav-link active' href='#'>Dashboard</a>
+                <!-- <a class='nav-link active' href='#'>Dashboard</a> -->
 
             </div>
         </div>

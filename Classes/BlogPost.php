@@ -7,7 +7,7 @@ class BlogPost
     public $user_id;
     public $category_id;
 
-    public function __construct($title, $content, $image = null, $user_id, $category_id)
+    public function __construct($title, $content, $user_id, $category_id, $image = null)
     {
         $this->title = $title;
         $this->content = $content;
@@ -50,7 +50,7 @@ class BlogPost
         $stmt = mysqli_prepare($conn, "INSERT INTO posts (title, content, image, user_id, category_id, created_at, updated_at) VALUES (?, ?, ?, ?, ?, NOW(), NOW())");
 
         if ($stmt) {
-            mysqli_stmt_bind_param($stmt, "ssssi", $this->title, $this->content, $this->image, $this->user_id, $this->category_id);
+            mysqli_stmt_bind_param($stmt, "sssii", $this->title, $this->content, $this->image, $this->user_id, $this->category_id);
 
             if (mysqli_stmt_execute($stmt)) {
                 return true;
