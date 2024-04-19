@@ -2,6 +2,8 @@
 
 require __DIR__ . "/../server.php";
 
+require __DIR__ . "/../Classes/BlogPost.php";
+
 // INDEX
 function getAllPosts()
 {
@@ -38,8 +40,31 @@ function getSinglePostById($post_id)
     return mysqli_fetch_assoc($result);
 };
 
-function createPost()
+// CREATE - WE INTERCEPT THE POST REQUEST AND CHECK IF THE ACTION IS createPost
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['action'] === 'createPost') {
+
+    $title = $_POST['title'];
+    $content = $_POST['content'];
+    $image = $_POST['image'];
+    $user_id = $_SESSION['user_id'];
+    $category_id = $_POST['category_id'];
+
+    // WE CREATE A BlogPost ISTANCE
+    $newPost = new BlogPost($title, $content, $image, $user_id, $category_id);
+    // THEN WE RUN THE CREATE METHOD
+    createPost($newPost);
+}
+
+function createPost($newPost)
 {
+    global $conn;
+    if ($newPost->save($conn)) {
+        $_SESSION['message'] = "Il post è stato creato con successo!";
+    } else {
+        $_SESSION['error'] = "Si è verificato un errore durante la creazione del post.";
+    }
+    header("Location: /index.php");
+    exit;
 }
 
 // UPDATE - WE INTERCEPT THE POST REQUEST AND CHECK IF THE ACTION IS updatePost

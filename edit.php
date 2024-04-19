@@ -9,7 +9,7 @@ include "Controllers/PostController.php";
 // IF USER IS NOT LOGGED IN, CAN NOT MODIFY POST
 if (!isset($_SESSION['user_id'])) {
 
-    $_SESSION['error'] = "L'utente deve essere loggato per modificare un post.";
+    $_SESSION['error'] = "L'utente deve essere autenticato per poter modificare un post.";
 
     header("Location: index.php");
 }
@@ -17,6 +17,10 @@ if (!isset($_SESSION['user_id'])) {
 // GETS THE POST DATA
 if (isset($_GET['post_id'])) {
     $post_id = $_GET['post_id'];
+} else {
+    $_SESSION['error'] = "Operazione non concessa.";
+
+    header("Location: index.php");
 }
 
 $post = getSinglePostById($post_id);
