@@ -4,9 +4,10 @@ require __DIR__ . "/Partials/head.php";
 require __DIR__ . "/Controllers/PostController.php";
 $posts = getAllPosts();
 
-if (isset($_GET['logout'])) {
+// OLD LOGOUT MESSAGE USING GET PARAMATER (FOR REFERENCE)
+/* if (isset($_GET['logout'])) {
     $_SESSION['message'] = 'Logout effettuato con successo.';
-}
+} */
 ?>
 
 <body>
