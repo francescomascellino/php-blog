@@ -78,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['ac
     $category_id = $_POST['category_id'];
 
     // WE CREATE A BlogPost ISTANCE
-    $newPost = new BlogPost($title, $content, $image, $user_id, $category_id);
+    $newPost = new BlogPost($title, $content, $user_id, $category_id, $image);
     // THEN WE RUN THE CREATE METHOD
     createPost($newPost);
 }

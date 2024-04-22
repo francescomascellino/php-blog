@@ -45,12 +45,14 @@ if (ini_get("session.use_cookies")) {
 }
 
 session_destroy();
+// session_unset();
 
 session_start();
 
-$_SESSION['message'] = "Logout effettuato con successo.";
+// $_SESSION['message'] = "Logout effettuato con successo.";
+$_SESSION['message'] = null;
 $_SESSION['error'] = null;
 
-// header("Location: index.php");
+// header("Location: /index.php");
 header("Location: /index.php?logout");
 exit();

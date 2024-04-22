@@ -11,10 +11,9 @@ class BlogPost
     {
         $this->title = $title;
         $this->content = $content;
-        
-        $this->image = $image;
         $this->user_id = $user_id;
         $this->category_id = $category_id;
+        $this->image = $image;        
     }
 
     public function getTitle()
